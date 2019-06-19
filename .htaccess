@@ -1,0 +1,4 @@
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !^/public/
+#RewriteRule (.*) /public/index.php/$1

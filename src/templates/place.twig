@@ -1,0 +1,19 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div>test: {{test}}</div>
+<ul class="places">
+    {% for place in places %}
+    <li>
+    	{{ place.account_id }}<br />
+    	{{ place.account_month }}
+    </li>
+	{% else %}
+	<li>
+    	{{ place.account_id }}<br />
+    	{{ place.account_month }}
+    </li>    
+    {% endfor %}
+</ul>
+
+{% endblock %}

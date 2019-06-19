@@ -26,3 +26,6 @@ function next_page(url){
 function edit_menu(id){
     window.location.href = "other/edit_menu/"+id;
 }
+function update_menu_detail(){
+    //มาอัปเดท
+}

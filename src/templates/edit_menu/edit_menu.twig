@@ -26,7 +26,7 @@
                                         </div>
                                         <div class="form-group">
                                                 <div class="form-line">
-                                                    <select class="form-control show-tick" tabindex="-98">
+                                                    <select class="form-control show-tick" id="status" name="status" tabindex="-98">
                                                         <option value="" >-- Please select --</option>
                                                         {% for i in 1..2 %}
                                                             {% if data.status == loop.index %}
@@ -36,6 +36,11 @@
                                                             {% set selected = '' %}
                                                         {% endfor %}
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                    <div class="form-line" style="text-align: center;">
+                                                    <button type="button" class="btn btn-success waves-effect" onclick="update_menu_detail()">SUCCESS</button>
                                                 </div>
                                             </div>
                                     </div>

@@ -22,7 +22,7 @@ class Main_function {
     }
         
     public function insert_member($menu_name,$part_menu) {
-        $sth = $this->db->prepare('INSERT into mvc_menu (menu_name, part_menu,status) values (:menu_name, :part_menu ,1)');
+        $sth = $this->db->prepare('INSERT into mvc_menu (menu_name, part_menu,status,create_time) values (:menu_name, :part_menu ,1,NOW())');
         $this->db->beginTransaction(); 
         $sth->execute(array(':menu_name' => $menu_name,':part_menu' => $part_menu)); 
 
@@ -31,7 +31,8 @@ class Main_function {
 
     public function update_member($menu_name,$part_menu) {
 
-        $sth = $this->db->prepare('UPDATE mvc_menu SET menu_name=:menu_name , part_menu=:part_menu WHERE id=:id');
+        $sth = $this->db->prepare('UPDATE mvc_menu SET menu_name=:menu_name 
+        , part_menu = :part_menu,update_time= NOW() WHERE id=:id');
         $this->db->beginTransaction(); 
         $sth->execute(array(':menu_name' => $menu_name,':part_menu' => $part_menu ,':id' => '2')); 
         $this->db->commit(); 
@@ -45,5 +46,27 @@ class Main_function {
 		$stmt->execute(array(':id' => $id));
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
+    public function del_menu($id) {
+        $sth = $this->db->prepare('DELETE FROM  mvc_menu WHERE id = :id');
+        $this->db->beginTransaction(); 
+        $sth->execute(array(':id' => $id )); 
+        $this->db->commit(); 
     
+    }
+    public function edit_menu_confirm($menu_name,$part_menu,$status) {
+
+        $sth = $this->db->prepare('UPDATE mvc_menu SET menu_name=:menu_name 
+        , part_menu = :part_menu, status = :status,update_time= NOW() WHERE id=:id');
+        $this->db->beginTransaction(); 
+        $sth->execute(array(':menu_name' => $menu_name,':part_menu' => $part_menu ,':id' => '2' ,'status' => $status)); 
+        $this->db->commit(); 
+    }
+    public function add_menu_confirm($menu_name,$part_menu,$status) {
+
+        $sth = $this->db->prepare('INSERT into mvc_menu (menu_name, part_menu,status,create_time) values (:menu_name, :part_menu ,:status,NOW())');
+        $this->db->beginTransaction(); 
+        $sth->execute(array(':menu_name' => $menu_name,':part_menu' => $part_menu,':status' => $status)); 
+
+        $this->db->commit(); 
+    }
 }

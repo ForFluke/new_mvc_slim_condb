@@ -18,4 +18,8 @@ $app->post('/insert_menu', ['\App\Controllers\HomeController', 'insert_data']);
 
 $app->post('/get_data/{table}', ['\App\Controllers\HomeController', 'get_data_in_db']);
 
+$app->post('/other/edit_menu/edit_menu_confirm', ['\App\Controllers\HomeController', 'edit_menu_confirm']);
+$app->post('/other/edit_menu/add_menu_confirm', ['\App\Controllers\HomeController', 'add_menu_confirm']);
+$app->post('/other/del_menu', ['\App\Controllers\HomeController', 'del_menu']);
+
 // $app->post('/get_data/mvc_menu', ['\App\Controllers\HomeController', 'get_data_in_db']);

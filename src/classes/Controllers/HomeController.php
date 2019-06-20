@@ -42,10 +42,28 @@ class HomeController extends MainController {
             'data' => $data_edit 
         ]);
     } 
-
+    public function del_menu(Request $request, Response $response, View $view , Main_function $Main_function){
+        $params =  $request->getParams();
+        $data_edit = $Main_function->del_menu($params['del_id']);
+        echo json_encode($data_edit);
+    } 
     public function get_data_in_db(Request $request, Response $response, View $view , Main_function $Main_function){
         $table = $request->getAttribute('route')->getArgument('table');
         $home_data = $Main_function->get_data_in_db($table);
         echo json_encode($home_data);
     } 
+    public function  edit_menu_confirm(Request $request, Response $response, View $view, Main_function $Main_function) {
+        $params =  $request->getParams();
+        $data_update = $params['data_from'];
+        $home_data = $Main_function->edit_menu_confirm($data_update['menu_name'],$data_update['part_menu'],$data_update['status']);
+
+       echo json_encode($home_data);
+    }
+    public function  add_menu_confirm(Request $request, Response $response, View $view, Main_function $Main_function) {
+        $params =  $request->getParams();
+        $data_update = $params['data_from'];
+        $home_data = $Main_function->add_menu_confirm($data_update['menu_name'],$data_update['part_menu'],$data_update['status']);
+
+       echo json_encode($home_data);
+    }
 }

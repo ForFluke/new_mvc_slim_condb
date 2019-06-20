@@ -11,46 +11,51 @@
                             </h2>
                         </div>
                         <div class="body">
+                            <form id="edit_value"  method="post" action="edit_menu_confirm" >
+                                    <input type="hidden" class="form-control" id="menu_id"  name="menu_id" value="{{data.id}}">
+
                                 <h2 class="card-inside-title">Edit Menu </h2>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" id="menu_name"  name="menu_name" placeholder="menu_name" value="{{data.menu_name}}">
+                                                <input type="text" class="form-control" id="menu_name"  name="menu_name" placeholder="menu_name" value="{{data.menu_name}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" id="part_menu"  name="part_menu" placeholder="Password" value="{{data.part_menu}}">
+                                                <input type="text" class="form-control" id="part_menu"  name="part_menu" placeholder="Part" value="{{data.part_menu}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                                 <div class="form-line">
-                                                    <select class="form-control show-tick" id="status" name="status" tabindex="-98">
+                                                    <select class="form-control show-tick" id="status" name="status" tabindex="-98" required>
                                                         <option value="" >-- Please select --</option>
                                                         {% for i in 1..2 %}
                                                             {% if data.status == loop.index %}
                                                                 {% set selected = 'selected' %}
                                                             {% endif %}
-                                                                <option value="{{loop.index}}" {{selected}}>เปิดการใช้งาน </option>
+                                                            {% if loop.index == 1 %}
+                                                                {% set text_show = 'เปิดการใช้งานเมนู' %}
+                                                            {% else %}
+                                                                {% set text_show = 'ปิดการใช้งานเมนู' %}
+                                                            {% endif %}
+                                                                <option value="{{loop.index}}" {{selected}}> {{text_show}} </option>
                                                             {% set selected = '' %}
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                    <div class="form-line" style="text-align: center;">
-                                                    <button type="button" class="btn btn-success waves-effect" onclick="update_menu_detail()">SUCCESS</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="form-group"  style="text-align: center;">
+                                                    <button type="button" class="btn btn-success waves-effect" onclick="update_menu_detail()">Edit</button>
+                                        </div>
                                     </div>
                                 </div>
-    
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
+
 
    {% include './footer.twig' %}

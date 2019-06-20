@@ -15,7 +15,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "secure" => true,
     "relaxed" => ["localhost", "crm.readyplanet.com", "crm-dev.readyplanet.com"],
     "path" => "/",
-    "passthrough" => ["/login","/ckeck_login","/other/profile","/other/login","/other/main_page","/insert_menu","/get_data/mvc_menu","/other/edit_menu","/other/edit_menu/1" ],
+    "passthrough" => ["/login","/ckeck_login","/other/profile","/other/login","/other/main_page","/insert_menu","/get_data/mvc_menu","/other/edit_menu","/other/edit_menu/1","/edit_menu_confirm","/add_menu_confirm","/other/del_menu"],
     "secret" => READYCRM_SECRET_KEY,
     "cookie" => READYCRM_COOKIE_NAME,
     "callback" => function ($request, $response, $arguments) use ($container) {

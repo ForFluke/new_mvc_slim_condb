@@ -1,0 +1,50 @@
+
+    {% include './header.twig' %}
+
+    <body class="theme-red ls-closed" style="padding: 50px">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Show Data in Database
+                            <small>Select data in table mvc_menu </small>
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                           <div class="btn btn-success waves-effect" onclick="next_page('management_content')" >   <i class="material-icons" style="color: #fff;">add</i> <span class="icon-name">เพิ่มข้อมูล</span> </div> 
+                        </div>
+                        
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th style="width: 200px;">Title</th>
+                                    <th>Detail</th>
+                                    <th style="width: 150px;">Date Time</th>
+                                    <th style="width: 300px;">Manage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for data_menu in data.data_menu  %}
+                                    <tr>
+                                        <th scope="row">{{loop.index}}</th>
+                                        <td>{{data_menu.title}}</td>
+                                        <td style="text-align: left">{{data_menu.detail[:200]}}...</td>
+                                        <td> {{data_menu.create_time}}</td>
+                                        <td >
+                                            <div class="btn btn-warning waves-effect" onclick="edit_content('{{data_menu.id}}')" >  <i class="material-icons" style="color: #fff;">add</i> <span class="icon-name" style="color: #fff;">แก้ไขข้อมูล</span> </div> 
+
+                                            <div class="btn btn-danger waves-effect" onclick="del_content('{{data_menu.id}}')" >   <i class="material-icons" style="color: #fff;">add</i> <span class="icon-name" style="color: #fff;">ลบข้อมูล</span>  </div> 
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   {% include './footer.twig' %}

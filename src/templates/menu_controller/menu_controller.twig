@@ -1,0 +1,43 @@
+{% include './header.twig' %}
+<style>
+    .info-box-2 .content {
+        padding: 10%;
+    }
+</style>
+
+<body class="theme-red ls-opened" style="padding: 50px;margin: 10%">
+
+        <div class="container-fluid">
+            <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="info-box-2 bg-red hover-expand-effect"  onClick="next_page('profile')">
+                            <div class="icon">
+                                <i class="material-icons" >assignment_ind</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Profile</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="info-box-2 bg-indigo hover-expand-effect"  onClick="next_page('main_page')">
+                            <div class="icon">
+                                <i class="material-icons">dns</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Setting Menu</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="info-box-2 bg-purple hover-expand-effect"  onClick="next_page('main_content')">
+                            <div class="icon">
+                                <i class="material-icons">bookmark</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Content</div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+{% include './footer.twig' %}

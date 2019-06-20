@@ -1,14 +1,21 @@
 
     {% include './header.twig' %}
-
+<style>
+    form p {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    </style>
     <body class="login-page">
 
 <div class="col-xs-12 col-sm-12">
     <div class="card profile-card">
+        <form method="POST" enctype="multipart/form-data" id="edit_profile" action="edit_profile_detail">
         <div class="profile-header">&nbsp;</div>
             <div class="profile-body">
                 <div class="image-area">
-                    <img src="https://gurayyarar.github.io/AdminBSBMaterialDesign/images/user-lg.jpg" alt="AdminBSB - Profile Image">
+                    <img src="https://gurayyarar.github.io/AdminBSBMaterialDesign/images/user-lg.jpg" alt="AdminBSB - Profile Image" onclick="import_img()">
+                    <input type="file"  id="img"  name="img" style="display: contents;" >
                 </div>
                 <div class="content-area">
                     <h3>{{ data.member.username }}</h3>
@@ -20,22 +27,24 @@
                 <ul>
                     <li>
                         <span>NAME </span>
-                        <span>{{ data.member.username }}</span>
+                        <span>{{ data.member.username }} <i class="material-icons"  onclick="show_edit_profile('username')">edit</i></span>
                     </li>
+            <input type="text" class="form-control" id="username"   style="display: none" name="username" placeholder="username" value="{{ data.member.username }}"  >
                     <li>
                         <span>Tell</span>
-                        <span>{{ data.member.tell }}</span>
+                        <span>{{ data.member.tell }} <i class="material-icons"  onclick="show_edit_profile('tell')">edit</i></span>
                     </li>
+            <input type="text" class="form-control" id="tell"  style="display: none" name="tell" placeholder="tell" value="{{ data.member.tell }}"  >
                     <li>
                         <span>E-mail</span>
-                        <span>{{ data.member.email }}</span>
+                        <span>{{ data.member.email }} <i class="material-icons" onclick="show_edit_profile('email')">edit</i></span>
                     </li>
+            <input type="text" class="form-control" id="email" style="display: none"  name="email" placeholder="email" value="{{ data.member.email }} "  >
                 </ul>
             </div>
-            <button class="btn btn-block bg-pink waves-effect" type="button" onClick="next_page('main_page')">Go to Home page</button>
-
-        </div>
-        
+            <button class="btn btn-block bg-pink waves-effect" type="button" onClick="insert_img()">Update Profile</button>
+        </form>
+        </div> 
     </div>
 
    {% include './footer.twig' %}

@@ -10,6 +10,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Models\Main_function as Main_function;
 use Slim\Http\UploadedFile;
 
+// ของ jwt
+use \Firebase\JWT\JWT;
+use \Tuupola\Base62;
+// ของ jwt
 
 class HomeController extends MainController {
     public function index(Request $request, Response $response, View $view) {
@@ -17,12 +21,24 @@ class HomeController extends MainController {
     }
 
     public function check_login(Request $request, Response $response, View $view, Main_function $Main_function) {
+        
         $params =  $request->getParams();
         $home_data = $Main_function->check_login($params['username'],$params['password']);
         echo json_encode($home_data);
         $_SESSION['member'] = $home_data ;
     }
+    public function check_login_client (Request $request, Response $response, View $view, Main_function $Main_function) {
+        $params =  $request->getParams();
+        $home_data = $Main_function->check_login($params['username'],$params['password']);
+        $_SESSION['member'] = $home_data ;
+        $secret = "your_secret_key";
+        $token = JWT::encode($home_data, $secret, "HS256");
+        $data = array();
+        $data['token'] =$token;
+        $data['status_login'] = $home_data;
+        echo json_encode($data);
 
+    }
     public function insert_data(Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
         $home_data = $Main_function->insert_member($params['menu_name'],$params['part_menu']);
@@ -148,4 +164,12 @@ class HomeController extends MainController {
             'data' => $data_session 
         ]);
     } 
+
+    public function api_function_call(Request $request, Response $response, View $view , Main_function $Main_function){
+        $route = $request->getAttribute('route');
+        $courseId = $route->getArgument('id');
+
+        echo '<pre>';print_r($route);echo '</pre>';
+        echo '<pre>';print_r($courseId);echo '</pre>';
+    }
 }

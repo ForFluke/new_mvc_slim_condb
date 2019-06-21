@@ -21,7 +21,7 @@ class Main_function {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
     public function check_login($email,$password) {
-    	$stmt = $this->db->prepare("SELECT * from mvc_member WHERE email = :email AND password = :password  ");
+    	$stmt = $this->db->prepare("SELECT id,username,nickname,email,tell from mvc_member WHERE email = :email AND password = :password  ");
 		$stmt->execute(array(':password' => $password,':email' => $email));
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }

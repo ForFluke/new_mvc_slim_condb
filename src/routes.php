@@ -10,6 +10,8 @@ $app->get('/place/{id}', ['\App\Controllers\PlaceController', 'getPlace']);
 
 $app->post('/ckeck_login', ['\App\Controllers\HomeController', 'check_login']);
 
+$app->post('/check_login_client', ['\App\Controllers\HomeController', 'check_login_client']);
+
 $app->get('/other/main_content', ['\App\Controllers\HomeController', 'content_page']);
 
 $app->get('/other/profile', ['\App\Controllers\HomeController', 'profile_page']);
@@ -43,3 +45,7 @@ $app->post('/other/edit_profile_detail', ['\App\Controllers\HomeController', 'ed
 $app->get('/calldata/mvc_menu', ['\App\Controllers\HomeController', 'mvc_menu_data_in_db']);
 
 $app->get('/calldata/{main_page}', ['\App\Controllers\HomeController', 'call_data_db']);
+
+// test other request
+
+$app->get('/api_function_call', ['\App\Controllers\HomeController', 'api_function_call']);

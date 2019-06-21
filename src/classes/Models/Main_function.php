@@ -21,7 +21,7 @@ class Main_function {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
     public function check_login($email,$password) {
-    	$stmt = $this->db->prepare("SELECT id,username,nickname,email,tell from mvc_member WHERE email = :email AND password = :password  ");
+    	$stmt = $this->db->prepare("SELECT id,username,nickname,email,tell,img_part from mvc_member WHERE email = :email AND password = :password  ");
 		$stmt->execute(array(':password' => $password,':email' => $email));
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
@@ -45,6 +45,10 @@ class Main_function {
 
     public function get_data_in_db($table) {
         return $this->db->query("SELECT * from {$table} ")->fetchAll(\PDO::FETCH_OBJ);
+    }
+    
+    public function request_content_api($table) {
+        return $this->db->query("SELECT title,detail,SUBSTRING(detail, 1, 200) AS detail_st,create_time,id from mvc_content ")->fetchAll(\PDO::FETCH_OBJ);
     }
     public function mvc_menu_data_in_db($table) {
         return $this->db->query("SELECT id,menu_name,part_menu,create_time, IF(status=1,true,'') as status from {$table} ")->fetchAll(\PDO::FETCH_OBJ);

@@ -17,6 +17,7 @@ use \Tuupola\Base62;
 
 class HomeController extends MainController {
     public function index(Request $request, Response $response, View $view) {
+        $session = new Session();
         return $view->render($response, 'login.twig');
     }
 
@@ -25,6 +26,7 @@ class HomeController extends MainController {
         $params =  $request->getParams();
         $home_data = $Main_function->check_login($params['username'],$params['password']);
         echo json_encode($home_data);
+        
         $_SESSION['member'] = $home_data ;
     }
     public function check_login_client (Request $request, Response $response, View $view, Main_function $Main_function) {
@@ -122,6 +124,11 @@ class HomeController extends MainController {
         $data_return = $Main_function->mvc_menu_data_in_db('mvc_menu');
         echo json_encode($data_return);
     } 
+    public function request_content_api(Request $request, Response $response, View $view , Main_function $Main_function){
+        $main_page = $request->getAttribute('route')->getArgument('main_page');
+        $data_return = $Main_function->request_content_api('mvc_content');
+        echo json_encode($data_return);
+    } 
     public function  edit_content_confirm(Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
         $data_update = $params['data_from'];
@@ -166,10 +173,10 @@ class HomeController extends MainController {
     } 
 
     public function api_function_call(Request $request, Response $response, View $view , Main_function $Main_function){
-        $route = $request->getAttribute('route');
-        $courseId = $route->getArgument('id');
-
-        echo '<pre>';print_r($route);echo '</pre>';
-        echo '<pre>';print_r($courseId);echo '</pre>';
+        $headers = $response->getHeaders();
+            foreach ($headers as $name => $values) {
+                echo $name . ": " . implode(", ", $values);
+            }
+        
     }
 }

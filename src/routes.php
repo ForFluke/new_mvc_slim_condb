@@ -44,6 +44,8 @@ $app->post('/other/edit_profile_detail', ['\App\Controllers\HomeController', 'ed
 // call api  and use data 
 $app->get('/calldata/mvc_menu', ['\App\Controllers\HomeController', 'mvc_menu_data_in_db']);
 
+$app->get('/calldata/mvc_content', ['\App\Controllers\HomeController', 'request_content_api']);
+
 $app->get('/calldata/{main_page}', ['\App\Controllers\HomeController', 'call_data_db']);
 
 // test other request

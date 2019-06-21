@@ -14,8 +14,9 @@
         <div class="profile-header">&nbsp;</div>
             <div class="profile-body">
                 <div class="image-area">
-                    <img src="https://gurayyarar.github.io/AdminBSBMaterialDesign/images/user-lg.jpg" alt="AdminBSB - Profile Image" onclick="import_img()">
+                    <img src="/mvc_slim/src/templates/img/{{ data.member.img_part }}" alt="AdminBSB - Profile Image" onclick="import_img()" style="max-width: 160px;max-height: 160px;">
                     <input type="file"  id="img"  name="img" style="display: contents;" >
+                    <input type="hidden"  id="img_name"  name="img_name" style="display: contents;" value="{{ data.member.img_part }}">
                 </div>
                 <div class="content-area">
                     <h3>{{ data.member.username }}</h3>
@@ -31,13 +32,18 @@
                     </li>
             <input type="text" class="form-control" id="username"   style="display: none" name="username" placeholder="username" value="{{ data.member.username }}"  >
                     <li>
+                        <span>Nick Name </span>
+                        <span>{{ data.member.nickname }} <i class="material-icons"  onclick="show_edit_profile('nickname')">edit</i></span>
+                    </li>
+            <input type="text" class="form-control" id="nickname"   style="display: none" name="nickname" placeholder="nickname" value="{{ data.member.nickname }}"  >
+                    <li>
                         <span>Tell</span>
                         <span>{{ data.member.tell }} <i class="material-icons"  onclick="show_edit_profile('tell')">edit</i></span>
                     </li>
             <input type="text" class="form-control" id="tell"  style="display: none" name="tell" placeholder="tell" value="{{ data.member.tell }}"  >
                     <li>
                         <span>E-mail</span>
-                        <span>{{ data.member.email }} <i class="material-icons" onclick="show_edit_profile('email')">edit</i></span>
+                        <span>{{ data.member.email }} </span>
                     </li>
             <input type="text" class="form-control" id="email" style="display: none"  name="email" placeholder="email" value="{{ data.member.email }} "  >
                 </ul>

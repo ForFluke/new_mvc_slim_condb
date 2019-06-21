@@ -12,6 +12,8 @@ $app->post('/ckeck_login', ['\App\Controllers\HomeController', 'check_login']);
 
 $app->get('/other/main_content', ['\App\Controllers\HomeController', 'content_page']);
 
+$app->get('/other/profile', ['\App\Controllers\HomeController', 'profile_page']);
+
 $app->get('/other/{main_page}', ['\App\Controllers\HomeController', 'other_page']);
 
 $app->get('/other/edit_menu/{id}', ['\App\Controllers\HomeController', 'edit_menu']);

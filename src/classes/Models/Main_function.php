@@ -14,7 +14,12 @@ class Main_function {
     public function getDataAll() {
         return $this->db->query("SELECT * from mvc_member")->fetchAll(\PDO::FETCH_OBJ);
     }
-    
+    public function show_profile($data) {
+        //echo '<pre>';print_r($data);echo '</pre>';
+        $stmt = $this->db->prepare("SELECT * from mvc_member WHERE email = :email AND id = :id ");
+		$stmt->execute(array(':id' => $data['id'],':email' => $data['email']));
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
     public function check_login($email,$password) {
     	$stmt = $this->db->prepare("SELECT * from mvc_member WHERE email = :email AND password = :password  ");
 		$stmt->execute(array(':password' => $password,':email' => $email));
@@ -99,5 +104,15 @@ class Main_function {
         $this->db->beginTransaction(); 
         $sth->execute(array(':title' => $title,':detail' => $detail)); 
         $this->db->commit(); 
+    }
+    public function edit_profile_detail($data) {
+        
+        $data['main_function'] = 'main_function';
+        $sth = $this->db->prepare('UPDATE  mvc_member SET username=:username 
+        ,tell=:tell,img_part=:img_part,nickname=:nickname WHERE email=:email');
+        $this->db->beginTransaction(); 
+        $sth->execute(array(':username' => $data['username'],':tell' => $data['tell'] ,':img_part' =>  $data['img'],':email' =>  $data['email'],':nickname' =>  $data['nickname'])); 
+        $this->db->commit(); 
+        // echo '<pre>';print_r($data);echo '</pre>';
     }
 }

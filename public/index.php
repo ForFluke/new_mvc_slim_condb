@@ -15,7 +15,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "secure" => true,
     "relaxed" => ["localhost", "crm.readyplanet.com", "crm-dev.readyplanet.com"],
     "path" => "/",
-    "passthrough" => ["/login","/ckeck_login","/other/profile","/other/login","/other/main_page","/insert_menu","/get_data/mvc_menu","/other/edit_menu","/other/edit_menu/1","/edit_menu_confirm","/add_menu_confirm","/other/del_menu","/calldata/mvc_menu","/other/menu_controller","/other/main_content","/other/management_content","/other/managent_content/add_content_confirm","/other/managent_content/edit_content_confirm","/other/edit_content","/other/edit_content/1","/other/del_content","/calldata/mvc_content","/other/edit_profile_detail"],
+    "passthrough" => ["/login","/ckeck_login","/other/profile","/other/login","/other/main_page","/insert_menu","/get_data/mvc_menu","/other/edit_menu","/other/edit_menu/1","/edit_menu_confirm","/add_menu_confirm","/other/del_menu","/calldata/mvc_menu","/other/menu_controller","/other/main_content","/other/management_content","/other/managent_content/add_content_confirm","/other/managent_content/edit_content_confirm","/other/edit_content","/other/edit_content/1","/other/del_content","/calldata/mvc_content","/other/edit_profile_detail","/templates/img/"],
     "secret" => READYCRM_SECRET_KEY,
     "cookie" => READYCRM_COOKIE_NAME,
     "callback" => function ($request, $response, $arguments) use ($container) {

@@ -8,6 +8,8 @@ use Slim\Views\Twig as View;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Models\Main_function as Main_function;
+use Slim\Http\UploadedFile;
+
 
 class HomeController extends MainController {
     public function index(Request $request, Response $response, View $view) {
@@ -42,6 +44,8 @@ class HomeController extends MainController {
             'data' => $data_session 
         ]);
     } 
+
+    
     public function edit_menu(Request $request, Response $response, View $view , Main_function $Main_function){
         $id = $request->getAttribute('route')->getArgument('id');
         $data_edit = $Main_function->edit_function($id);
@@ -117,8 +121,31 @@ class HomeController extends MainController {
 
     public function edit_profile_detail(Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
-
-        echo '<pre>';print_r($params);echo '</pre>';
-
+       
+            $uploadedFiles = $request->getUploadedFiles();
+            $uploadedFile = $uploadedFiles['img'];
+      
+            $destination = "../../../templates/img/"; //part file upload
+            $newfile = $uploadedFiles['img'];
+      
+            if ($newfile->getError() === UPLOAD_ERR_OK) {
+                $uploadFileName = $newfile->getClientFilename();
+                $newfile->moveTo(__DIR__ .$destination.''.$uploadFileName);
+            }
+            $params['img'] =  $uploadFileName;
+        if(empty($params['img'])){
+            $params['img'] =  $params['img_name'];
+        }
+        $home_data = $Main_function->edit_profile_detail($params);
+       
+        return $response->withRedirect('profile'); 
     }
+    public function profile_page(Request $request, Response $response, View $view , Main_function $Main_function){
+        $data_session = $_SESSION;
+        $data_session['member'] = $Main_function->show_profile($data_session['member']);
+        //echo '<pre>';print_r($data_session['detail']);
+        return $view->render($response, 'profile/profile.twig' ,[
+            'data' => $data_session 
+        ]);
+    } 
 }

@@ -1,0 +1,66 @@
+{% include './frontend/header.twig' %}
+<script src="//www.google.com/recaptcha/api.js?render=6LcDTKoUAAAAAARTjiGhrp8zrhIVWNDyqYy_ahVE"></script>
+
+<body class="login-page">
+<div class="login-box">
+    <div class="logo">
+        <a href="javascript:void(0);">LOGIN To Handlebars</a>
+    </div>
+    <div class="card">
+        <div class="body">
+            <form id="sign_in"  method="post" >
+                <!-- เช็ค recaptcha -->
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" value="">
+                <!-- เช็ค recaptcha -->
+                <div class="msg"></div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">person</i>
+                    </span>
+                    <div class="form-line">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <div class="form-line">
+                        <input type="password" class="form-control" id="password"  name="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-block bg-pink waves-effect" type="button" onClick="check_login()">SIGN IN</button>
+                    </div>
+                </div>
+                <div class="row m-t-15 m-b--20">
+                    <div class="col-xs-6">
+                    </div>
+                    <div class="col-xs-6 align-right">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+      <!-- script load -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <!-- script load -->
+      <!-- Jquery Core Js -->
+      <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap Core Js -->
+      <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/plugins/bootstrap/js/bootstrap.js"></script>
+      <!-- Waves Effect Plugin Js -->
+      <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/plugins/node-waves/waves.js"></script>
+      <!-- Validation Plugin Js -->
+      <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/plugins/jquery-validation/jquery.validate.js"></script>
+      <!-- Custom Js -->
+      <!-- <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/js/admin.js"></script> -->
+      <!-- <script src="https://gurayyarar.github.io/AdminBSBMaterialDesign/js/pages/examples/sign-in.js"></script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="/mvc_slim/src/templates/js/main_login_frontend.js"></script>
+</body>
+</html>

@@ -21,15 +21,42 @@ function check_login() {
     });
 }
 
+function check_admin_login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+  
+    $.ajax({
+        type: "POST",
+        url: "check_admin_login",
+        data: { username: username, password: password},
+        success: function(html){
+            // jwt_function(html);
+            // console.log(html);
+            var Obj = JSON.parse(html);
+            if(Obj == false){
+                alert('UserName OR Password Not Correct');
+                window.location.href = "?"
+            }else{
+                window.location.href = "other/menu_controller";
+            }
+        }
+    });
+}
+
 function next_page(url){
     window.location.href = url;
 }
-
+function frontend_go(url){
+    window.location.href = "../frontend/"+url;
+}
 function edit_menu(id){
     window.location.href = "edit_menu/"+id;
 }
 function edit_content(id){
     window.location.href = "edit_content/"+id;
+}
+function edit_member_profile(id){
+    window.location.href = "profile/"+id;
 }
 function update_menu_detail(){
         //มาอัปเดท
@@ -107,6 +134,7 @@ function del_menu(id){
         });
     }
 }
+
 function del_content(id){
     var result = confirm("Want to delete?");
     if (result) {

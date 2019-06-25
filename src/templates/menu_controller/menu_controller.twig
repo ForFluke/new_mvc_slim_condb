@@ -1,4 +1,7 @@
-{% include './header.twig' %}
+{% extends "./show_profile/layout.twig" %}
+
+{% block content %}
+
 {% include './nevbar.twig' %}
 <style>
     .info-box-2 .content {
@@ -10,8 +13,8 @@
 
         <div class="container-fluid">
             <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="info-box-2 bg-red hover-expand-effect"  onClick="next_page('profile')">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box-2 bg-red hover-expand-effect"  onClick="next_page('managent_profile')">
                             <div class="icon">
                                 <i class="material-icons" >assignment_ind</i>
                             </div>
@@ -20,7 +23,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box-2 bg-indigo hover-expand-effect"  onClick="next_page('main_page')">
                             <div class="icon">
                                 <i class="material-icons">dns</i>
@@ -30,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box-2 bg-purple hover-expand-effect"  onClick="next_page('main_content')">
                             <div class="icon">
                                 <i class="material-icons">bookmark</i>
@@ -39,6 +42,16 @@
                                 <div class="text">Content</div>
                             </div>
                         </div>
-                </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box-2 bg-orange hover-expand-effect"  onClick="frontend_go('login_frontend')">
+                            <div class="icon">
+                                <i class="material-icons">devices</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Frontend</div>
+                            </div>
+                        </div>
+                    </div>
             </div>
-{% include './footer.twig' %}
+            {% endblock %}

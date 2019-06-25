@@ -1,0 +1,42 @@
+{% extends "./frontend/layout.twig" %}
+{% block content %}
+
+{% include './frontend/nav_bar.twig' %}
+
+<!-- เอาไว้แสดงผข้อมูลส่วนของ nav bar -->
+
+
+<section class="content">
+    <div class="row clearfix show_profile_detail" >
+    </div>
+</section>
+
+{% raw %}
+    <script id="profie_detail_usejwt" type="text/x-handlebars-template">
+        <div class="card profile-card" style="margin: 0 200px;">
+            <div class="profile-header">&nbsp;</div>
+                <div class="profile-body">
+                    <div class="image-area">
+                        <img src="/mvc_slim/src/templates/img/{{img_part}}" alt="AdminBSB - Profile Image" style="max-width: 160px;max-height: 160px;">
+                    </div>
+                    <div class="content-area">
+                        <h3>{{username}}</h3>
+                        <p>{{nickname}}</p>
+                        <p>{{email}}</p>
+                        <p>{{tell}}</p>
+                    </div>
+                </div>
+                <div class="profile-footer">
+                </div>
+        </div>
+    </script>
+{% endraw %}
+    
+
+        <script>
+            $(function () {
+                var data_json = parseJwt(document.cookie);
+                show_profile_detail(data_json);
+            });
+    </script>
+    {% endblock %}

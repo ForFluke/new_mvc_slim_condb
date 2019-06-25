@@ -1,0 +1,75 @@
+{% extends "./frontend/layout.twig" %}
+{% block content %}
+
+{% include './frontend/nav_bar.twig' %}
+
+<!-- The #each helper iterates over an array of items. -->
+
+    <section class="content" style="margin-top: 100px;margin-left: 15px;margin-right: 15px;">
+    
+        <div class="container-fluid show_data">
+                <div class="row clearfix content_callbacks">
+                </div>
+        </div>
+    </section>
+    
+    <div class="container-fluid model_show_detail">
+      
+    </div>
+    
+    {% raw %}
+
+    
+        <script id="content_tem" type="text/x-handlebars-template">
+            {{#each content}}
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 " data-toggle="modal" data-target="#myModal{{id}}">
+                    <div class="card content hover-expand-effect" >
+                        <div class="header content hover-expand-effect">
+                            <h2>
+                                {{title}} <small>{{create_time}}</small>
+                            </h2>
+                        </div>
+                        <div class="body content hover-expand-effect" style="min-height: 140px;">
+                                {{#ifCond_content detail_st '!==' detail}}
+                                    <!-- {{detail_st}}  -->
+                                    <p> {{{trimString detail}}}... </p>
+                                {{else}}
+                                    <!-- {{detail_st}}  -->
+                                    <p> {{{trimString detail}}} </p>
+                                {{/ifCond_content}}
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+        </script>
+    
+        <script id="content_tem_full" type="text/x-handlebars-template">
+            {{#each content}}
+                <div class="modal fade" id="myModal{{id}}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">{{title}} </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{detail}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            {{/each}}
+        </script>
+    {% endraw %}
+    
+
+    <script>
+            $(function () {
+                getcontent();
+            });
+    </script>
+        {% endblock %}

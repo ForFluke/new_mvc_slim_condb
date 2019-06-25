@@ -1,0 +1,46 @@
+<div class="container-fluid " >
+    <nav class="navbar">
+        <div class="container-fluid"  style="background: #333;">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars" style="display: block;"></a>
+                <a class="navbar-brand" href="home">handlebars</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right menu_callbacks">
+                    
+                </ul>
+                <div class="navbar-header" style="float: right;">
+                    <div class="row clearfix profile_call_token">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+{% raw %}
+        <script id="example-template" type="text/x-handlebars-template">
+                {{#each people}}
+    
+                        {{#ifCond status '==' 1}}
+                            <li><a href="{{part_menu}}" >
+                                <div class="demo-google-material-icon">  <span class="icon-name">{{menu_name}}</span> </div></a>
+                            </li>
+                        {{else}}
+                       
+                        {{/ifCond}}
+                {{/each}}
+                <li><a href="login_frontend"  onclick="document.cookie='json_data=;expires=Wed; 01 Jan 1970'">
+                    <div class="demo-google-material-icon">  <span class="icon-name" >Logout</span> </div></a>
+                </li>
+        </script>
+    
+        <script id="profile_call_token_sc" type="text/x-handlebars-template">
+            <div class="demo-google-material-icon"> 
+                <span class="icon-name navbar-brand" style="color: #337ab7;">
+                  Profile  {{username}}  ||
+                </span>
+            </div>
+        </script>
+{% endraw %}

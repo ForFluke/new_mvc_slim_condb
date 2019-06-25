@@ -26,18 +26,33 @@ class HomeController extends MainController {
         $params =  $request->getParams();
         $home_data = $Main_function->check_login($params['username'],$params['password']);
         echo json_encode($home_data);
+
+        $_SESSION['member'] = $home_data ;
+    }
+    public function check_admin_login(Request $request, Response $response, View $view, Main_function $Main_function) {
         
+        $params =  $request->getParams();
+        $home_data = $Main_function->check_admin_login($params['username'],$params['password']);
+        echo json_encode($home_data);
         $_SESSION['member'] = $home_data ;
     }
     public function check_login_client (Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
+        $data = array();
+        $response = $Main_function->check_recaptcha($params['g_recaptcha_response']);
+        $data['response'] = $response;
         $home_data = $Main_function->check_login($params['username'],$params['password']);
         $_SESSION['member'] = $home_data ;
+
         $secret = "your_secret_key";
         $token = JWT::encode($home_data, $secret, "HS256");
-        $data = array();
         $data['token'] =$token;
-        $data['status_login'] = $home_data;
+        if(isset($response) && $response['success'] == true && $response['score'] >= '0.1'){
+            $data['status_login'] = $home_data;
+            //เช็คว่าเป็นคน หรือ โรบอท โดยใช้ google recaptcha เช็ค ถ้า score น้อยกว่า 0.5 จะไม่ให้ผ่าน จะแสดงว่าเป็น โรบอท 
+        }else{
+            $data['status_login'] = false;
+        }
         echo json_encode($data);
 
     }
@@ -54,6 +69,16 @@ class HomeController extends MainController {
             'data' => $data_session 
         ]);
     } 
+
+    public function frontend_page(Request $request, Response $response, View $view , Main_function $Main_function){
+        // แสดงผลข้อมูลผ่านการดึงข้อมูลหน้า frontend
+        $main_page = $request->getAttribute('route')->getArgument('main_page');
+        $data_session = $_SESSION;
+        $data_session['data_menu'] = $Main_function->get_data_in_db('mvc_menu');
+        return $view->render($response, 'frontend/'.$main_page.'/'.$main_page.'.twig' ,[
+            'data' => $data_session 
+        ]);
+    } 
     
     public function content_page(Request $request, Response $response, View $view , Main_function $Main_function){
         $data_session = $_SESSION;
@@ -63,11 +88,17 @@ class HomeController extends MainController {
         ]);
     } 
 
-    
+    public function member_profile(Request $request, Response $response, View $view , Main_function $Main_function){
+        $data_session = $_SESSION;
+        $data_session['data_profile'] = $Main_function->get_data_in_db('mvc_member');
+        return $view->render($response, 'managent_profile/managent_profile.twig' ,[
+            'data' => $data_session 
+        ]);
+    } 
+
     public function edit_menu(Request $request, Response $response, View $view , Main_function $Main_function){
-        $id = $request->getAttribute('route')->getArgument('id');
+        $id = $request->getAttribute('route')->getArgument('id_page');
         $data_edit = $Main_function->edit_function($id);
-        // echo '<pre>';print_r($data_edit);exit;
         return $view->render($response, 'edit_menu/edit_menu.twig' ,[
             'data' => $data_edit 
         ]);
@@ -76,7 +107,6 @@ class HomeController extends MainController {
     public function edit_content(Request $request, Response $response, View $view , Main_function $Main_function){
         $id = $request->getAttribute('route')->getArgument('id');
         $data_edit = $Main_function->edit_content_function($id);
-        // echo '<pre>';print_r($data_edit);exit;
         return $view->render($response, 'management_content/management_content.twig' ,[
             'data' => $data_edit 
         ]);
@@ -87,6 +117,7 @@ class HomeController extends MainController {
         $data_edit = $Main_function->del_menu($params['del_id']);
         echo json_encode($data_edit);
     } 
+
     public function del_content(Request $request, Response $response, View $view , Main_function $Main_function){
         $params =  $request->getParams();
         $data_edit = $Main_function->del_content($params['del_id']);
@@ -102,15 +133,13 @@ class HomeController extends MainController {
         $params =  $request->getParams();
         $data_update = $params['data_from'];
         $home_data = $Main_function->edit_menu_confirm($data_update['menu_name'],$data_update['part_menu'],$data_update['status'],$data_update['id']);
-
-       echo json_encode($home_data);
+        echo json_encode($home_data);
     }
     public function  add_menu_confirm(Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
         $data_update = $params['data_from'];
         $home_data = $Main_function->add_menu_confirm($data_update['menu_name'],$data_update['part_menu'],$data_update['status']);
-
-       echo json_encode($home_data);
+        echo json_encode($home_data);
     }
 
     public function call_data_db(Request $request, Response $response, View $view , Main_function $Main_function){
@@ -133,13 +162,13 @@ class HomeController extends MainController {
         $params =  $request->getParams();
         $data_update = $params['data_from'];
         $home_data = $Main_function->edit_content_confirm($data_update['title'],$data_update['detail'],$data_update['id']);
-       echo json_encode($home_data);
+        echo json_encode($home_data);
     }
     public function  add_content_confirm(Request $request, Response $response, View $view, Main_function $Main_function) {
         $params =  $request->getParams();
         $data_update = $params['data_from'];
         $home_data = $Main_function->add_content_confirm($data_update['title'],$data_update['detail']);
-       echo json_encode($home_data);
+        echo json_encode($home_data);
     }
 
     public function edit_profile_detail(Request $request, Response $response, View $view, Main_function $Main_function) {
@@ -147,7 +176,6 @@ class HomeController extends MainController {
        
             $uploadedFiles = $request->getUploadedFiles();
             $uploadedFile = $uploadedFiles['img'];
-      
             $destination = "../../../templates/img/"; //part file upload
             $newfile = $uploadedFiles['img'];
       
@@ -161,12 +189,11 @@ class HomeController extends MainController {
         }
         $home_data = $Main_function->edit_profile_detail($params);
        
-        return $response->withRedirect('profile'); 
+        return $response->withRedirect('managent_profile'); 
     }
     public function profile_page(Request $request, Response $response, View $view , Main_function $Main_function){
         $data_session = $_SESSION;
         $data_session['member'] = $Main_function->show_profile($data_session['member']);
-        //echo '<pre>';print_r($data_session['detail']);
         return $view->render($response, 'profile/profile.twig' ,[
             'data' => $data_session 
         ]);
@@ -178,5 +205,13 @@ class HomeController extends MainController {
                 echo $name . ": " . implode(", ", $values);
             }
         
+    }
+    public function select_profile_id(Request $request, Response $response, View $view , Main_function $Main_function){
+        $id = $request->getAttribute('route')->getArgument('id_page');
+        $data_return = $Main_function->call_member_by_id($id);
+        $data_session['member'] = $Main_function->show_profile($data_return);
+        return $view->render($response, 'profile/profile.twig' ,[
+            'data' => $data_session 
+        ]);
     }
 }

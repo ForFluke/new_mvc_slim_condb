@@ -1,5 +1,6 @@
 
-    {% include './header.twig' %}
+{% extends "./show_profile/layout.twig" %}
+{% block content %}
     {% include './nevbar.twig' %}
     <body class="theme-red ls-closed" style="padding: 50px">
         <div class="row clearfix">
@@ -49,4 +50,4 @@
             </div>
         </div>
 
-   {% include './footer.twig' %}
+        {% endblock %}

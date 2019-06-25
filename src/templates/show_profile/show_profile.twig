@@ -1,0 +1,70 @@
+{% extends "./show_profile/layout.twig" %}
+
+{% block content %}
+{# learning twig function #}
+
+
+{#  raw คือการแปลง string ที่มี Tag html ให้แสดงผลตาม Tag #}
+ {% set hello = '<strong>Hello</strong>' %}
+{% autoescape %}
+    {% set hello = '<strong>Hello</strong>' %}
+    {% set hola = '<strong>Hola</strong>' %}
+
+    {{ false ? '<strong>Hola</strong>' : hello|raw }}
+        does not render the same as
+    {{ false ? hola : hello|raw }}
+        but renders the same as
+    {{ (false ? hola : hello)|raw }}
+
+{% endautoescape %}
+
+{#  number_format #}
+
+<br>
+
+{# {{ 9800.333|number_format(2, '.', ',') }} #}
+
+{#  autoescape #}
+
+<br>
+
+{# {% autoescape true %} #}
+    {# {{ hello }}         การแสดงผลปกติ #}
+    {# {{ hello|raw }}     การแสดงผลใช้ tag html #}
+    {# {{ hello|escape }}  ไม่สามารถทำ double-escaped ได้ #}
+{# {% endautoescape %} #}
+
+{#  if else for #}
+
+{# <br>
+{% for hello in users %}
+    {% if hello == hello %}
+        <p>Website หยุดให้บริการชั่วคราว</p>
+    {% endif %}
+{% endfor %}
+
+<br> #}
+{# Template  ex  #}
+{# 
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %} 
+            <link rel="stylesheet" href="style.css" />
+            <title>{% block title %}{% endblock %} - My Webpage</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="content">{% block content %}{% endblock %}</div>  
+        <div id="footer">
+            {% block footer %}  
+                &copy; Copyright 2011 by <a href="">you</a>.
+            {% endblock %}
+        </div>
+    </body>
+</html> #}
+
+<br>
+{# Template  ex  #}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+
+{% extends "./show_profile/layout.twig" %}
+{% block content %}
+
+{% include './nevbar.twig' %}
+
+    <body class="theme-red ls-closed" style="padding: 50px">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Managent Profile
+                        </h2>
+ 
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th style="width: 200px;">Name</th>
+                                    <th>Nick Name</th>
+                                    <th style="width: 150px;">Tell</th>
+                                    <th style="width: 300px;">Manage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for data_profile in data.data_profile  %}
+                                    <tr>
+                                        <th scope="row">{{loop.index}}</th>
+                                        <td>{{data_profile.username}}</td>
+                                        <td style="text-align: center">{{data_profile.nickname}}</td>
+                                        <td> {{data_profile.tell}}</td>
+                                        <td >
+                                            <div class="btn btn-warning waves-effect" onclick="edit_member_profile('{{data_profile.id}}')" >  <i class="material-icons" style="color: #fff;">add</i> <span class="icon-name" style="color: #fff;">แก้ไขข้อมูล</span> </div> 
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}

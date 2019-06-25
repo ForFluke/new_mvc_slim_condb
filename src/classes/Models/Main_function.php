@@ -25,7 +25,12 @@ class Main_function {
 		$stmt->execute(array(':password' => $password,':email' => $email));
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
-        
+    public function check_admin_login($email,$password) {
+    	$stmt = $this->db->prepare("SELECT id,username,nickname,email,tell,img_part from mvc_admin WHERE email = :email AND password = :password  ");
+		$stmt->execute(array(':password' => $password,':email' => $email));
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+         
     public function insert_member($menu_name,$part_menu) {
         $sth = $this->db->prepare('INSERT into mvc_menu (menu_name, part_menu,status,create_time) values (:menu_name, :part_menu ,1,NOW())');
         $this->db->beginTransaction(); 
@@ -51,7 +56,9 @@ class Main_function {
         return $this->db->query("SELECT title,detail,SUBSTRING(detail, 1, 200) AS detail_st,create_time,id from mvc_content ")->fetchAll(\PDO::FETCH_OBJ);
     }
     public function mvc_menu_data_in_db($table) {
-        return $this->db->query("SELECT id,menu_name,part_menu,create_time, IF(status=1,true,'') as status from {$table} ")->fetchAll(\PDO::FETCH_OBJ);
+        // return $this->db->query("SELECT id,menu_name,part_menu,create_time, IF(status=1,true,'') as status from {$table} ")->fetchAll(\PDO::FETCH_OBJ);
+        return $this->db->query("SELECT id,menu_name,part_menu,create_time, status from {$table} ")->fetchAll(\PDO::FETCH_OBJ);
+
     }
     
     public function edit_function($id) {
@@ -118,5 +125,27 @@ class Main_function {
         $sth->execute(array(':username' => $data['username'],':tell' => $data['tell'] ,':img_part' =>  $data['img'],':email' =>  $data['email'],':nickname' =>  $data['nickname'])); 
         $this->db->commit(); 
         // echo '<pre>';print_r($data);echo '</pre>';
+    }
+    public function check_recaptcha($data) {
+    // เช็ค google recaptha 
+        $recaptcha_secret = "6LcDTKoUAAAAAEkiizw3FRgewiZ4s5iPn0hlSsXD"; //รหัส secret ที่ได้รับมาตอนขอ api
+        $recaptcha_response = trim($data);  //token ที่ได้รับมาตอนส่งค่าหน้าบ้าน
+        $recaptcha_remote_ip = '';  //url 
+    
+        $recaptcha_api = "https://www.google.com/recaptcha/api/siteverify?".
+            http_build_query(array(
+                'secret'=>$recaptcha_secret,
+                'response'=>$recaptcha_response,
+                'remoteip'=>$recaptcha_remote_ip
+            )
+        );  // ส่งค่า รหัส url ที่ทำงาน และ token ที่ได้รับมาจากหน้าเว็บไปตรวจสอบ ใน api 
+        $response = json_decode(file_get_contents($recaptcha_api), true);     
+        return $response;
+    // เช็ค google recaptha 
+    }
+    public function call_member_by_id($id) {
+        $stmt = $this->db->prepare("SELECT * from mvc_member WHERE id = :id ");
+		$stmt->execute(array(':id' => $id));
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

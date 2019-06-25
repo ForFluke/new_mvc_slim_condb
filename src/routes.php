@@ -10,22 +10,31 @@ $app->get('/place/{id}', ['\App\Controllers\PlaceController', 'getPlace']);
 
 $app->post('/ckeck_login', ['\App\Controllers\HomeController', 'check_login']);
 
+$app->post('/check_admin_login', ['\App\Controllers\HomeController', 'check_admin_login']);
+
 $app->post('/check_login_client', ['\App\Controllers\HomeController', 'check_login_client']);
 
 $app->get('/other/main_content', ['\App\Controllers\HomeController', 'content_page']);
 
 $app->get('/other/profile', ['\App\Controllers\HomeController', 'profile_page']);
 
+$app->get('/other/profile/{id_page}', ['\App\Controllers\HomeController', 'select_profile_id']);
+
+$app->get('/other/managent_profile', ['\App\Controllers\HomeController', 'member_profile']);
+
 $app->get('/other/{main_page}', ['\App\Controllers\HomeController', 'other_page']);
 
-$app->get('/other/edit_menu/{id}', ['\App\Controllers\HomeController', 'edit_menu']);
+$app->get('/other/edit_menu/{id_page}', ['\App\Controllers\HomeController', 'edit_menu']);
 
 $app->get('/other/edit_content/{id}', ['\App\Controllers\HomeController', 'edit_content']);
 
 $app->post('/insert_menu', ['\App\Controllers\HomeController', 'insert_data']);
 
 $app->post('/get_data/{table}', ['\App\Controllers\HomeController', 'get_data_in_db']);
+// frontend
+$app->get('/frontend/{main_page}', ['\App\Controllers\HomeController', 'frontend_page']);
 
+// frontend
 //จัดการข้อมูล menu ใน db (เพิ่ม ลบ แก้ไข )
 $app->post('/other/edit_menu/edit_menu_confirm', ['\App\Controllers\HomeController', 'edit_menu_confirm']);
 $app->post('/other/edit_menu/add_menu_confirm', ['\App\Controllers\HomeController', 'add_menu_confirm']);
@@ -51,3 +60,4 @@ $app->get('/calldata/{main_page}', ['\App\Controllers\HomeController', 'call_dat
 // test other request
 
 $app->get('/api_function_call', ['\App\Controllers\HomeController', 'api_function_call']);
+

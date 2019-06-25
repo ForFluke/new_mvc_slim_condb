@@ -33,6 +33,11 @@ class HomeController extends MainController {
         
         $params =  $request->getParams();
         $home_data = $Main_function->check_admin_login($params['username'],$params['password']);
+        // echo $request->getHeader("Authorization")[0];
+        $secret = "pgk";
+        $token = JWT::encode($home_data, $secret, "HS256");
+        $home_data['token'] =$token;
+
         echo json_encode($home_data);
         $_SESSION['member'] = $home_data ;
     }

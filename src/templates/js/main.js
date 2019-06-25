@@ -24,19 +24,24 @@ function check_login() {
 function check_admin_login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
-  
     $.ajax({
         type: "POST",
         url: "check_admin_login",
+        beforeSend : function(req) { 
+            req.setRequestHeader("Authorization", username);
+        },
         data: { username: username, password: password},
         success: function(html){
             // jwt_function(html);
-            // console.log(html);
             var Obj = JSON.parse(html);
+            // console.log(Obj);
             if(Obj == false){
                 alert('UserName OR Password Not Correct');
                 window.location.href = "?"
             }else{
+                
+                json_data = Obj.token;
+                document.cookie = "readycrm="+json_data;
                 window.location.href = "other/menu_controller";
             }
         }
@@ -119,6 +124,17 @@ $.ajax({
     }
 });
 }
+function clear_cookie_all(){
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+       
+    }
+  }
 
 function del_menu(id){
     var result = confirm("Want to delete?");

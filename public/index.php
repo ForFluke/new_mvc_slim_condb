@@ -4,14 +4,27 @@ $app = new \App\App;
 define("READYCRM_SECRET_KEY","pgk");
 define("READYCRM_COOKIE_NAME","readycrm");
 define("READYCRM_TOKEN_ALGORITHM","HS256");
-
+// ต้อง  set cookie ชื่อ readycrm โดยส่ง token เป็น jwt มี SECRET_KEY = pgk และ เข้ารหัสเป็น HS256
 $container = $app->getContainer();
 
 $container->jwt = function ($container) use ($app) {
     return new StdClass;
 };
 
+
+// ดัก ถ้ามี cookie แต่ไม่มี part จะโหลดไปหน้าหลักให้ แต่ถ้าไม่มี cookie จะโหลดข้อมูลไปหน้า login 
+
+$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+
+if(empty(str_replace("http://localhost/mvc_slim/public/","",$actual_link)) && !empty($_COOKIE['readycrm'])){
+    header('Location: /mvc_slim/public/other/menu_controller');
+    exit;
+}
+// ดัก ถ้ามี cookie แต่ไม่มี part จะโหลดไปหน้าหลักให้ แต่ถ้าไม่มี cookie จะโหลดข้อมูลไปหน้า login 
+
+
 $app->add(new \Slim\Middleware\JwtAuthentication([
+    
     "secure" => true,
     "relaxed" => ["localhost", "crm.readyplanet.com", "crm-dev.readyplanet.com"],
     "path" => "/",

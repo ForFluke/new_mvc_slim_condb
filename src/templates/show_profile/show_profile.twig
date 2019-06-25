@@ -3,6 +3,7 @@
 {% block content %}
 {# learning twig function #}
 
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 {#  raw คือการแปลง string ที่มี Tag html ให้แสดงผลตาม Tag #}
  {% set hello = '<strong>Hello</strong>' %}
@@ -17,33 +18,52 @@
     {{ (false ? hola : hello)|raw }}
 
 {% endautoescape %}
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 {#  number_format #}
 
 <br>
 
-{# {{ 9800.333|number_format(2, '.', ',') }} #}
+{{ 9800.333|number_format(2, '.', ',') }}
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 {#  autoescape #}
 
 <br>
 
-{# {% autoescape true %} #}
-    {# {{ hello }}         การแสดงผลปกติ #}
-    {# {{ hello|raw }}     การแสดงผลใช้ tag html #}
-    {# {{ hello|escape }}  ไม่สามารถทำ double-escaped ได้ #}
-{# {% endautoescape %} #}
+{% autoescape true %} #}
+    {{ hello }}          {# การแสดงผลปกติ #}
+    {{ hello|raw }}      {# การแสดงผลใช้ tag html #}
+    {{ hello|escape }}  {# ไม่สามารถทำ double-escaped ได้ #}
+ {% endautoescape %}
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 {#  if else for #}
 
-{# <br>
+<br>
 {% for hello in users %}
     {% if hello == hello %}
         <p>Website หยุดให้บริการชั่วคราว</p>
     {% endif %}
 {% endfor %}
 
-<br> #}
+    {# 
+    ตัวช่วยใน loop เช่น loop.index คือการเอา key ใน loopนั้นๆมาแสดง
+
+    loop.index	The current iteration of the loop. (1 indexed)
+    loop.index0	The current iteration of the loop. (0 indexed)
+    loop.revindex	The number of iterations from the end of the loop (1 indexed)
+    loop.revindex0	The number of iterations from the end of the loop (0 indexed)
+    loop.first	True if first iteration
+    loop.last	True if last iteration
+    loop.length	The number of items in the sequence
+    loop.parent	The parent context 
+    
+    #}
+
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
 {# Template  ex  #}
 {# 
 <!DOCTYPE html>
@@ -63,8 +83,158 @@
         </div>
     </body>
 </html> #}
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 <br>
-{# Template  ex  #}
+{# set value  ex  #}
+	
+    {% set foo = 'bar' %}
+    {{ foo }}
+    {% set foo, bar = 'foo', 'bar' %}
+    {{ foo }}
+    {# is equivalent to #}
+
+    {% set foo = 'foo' %}
+    {{ foo }}
+    {% set bar = 'bar' %}
+
+    {% set foo %}
+        {{ foo }}
+    {% endset %}
+    {{ foo }}
+
+        {% set foo = "" %}
+        {% for item in list %}
+            {% set foo = item %}
+        {% endfor %}
+        {{ foo }}
+<br>
+{# set value  ex  #}
+{% verbatim %}
+    <ul>
+    {% for item in seq %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+{% endverbatim %}
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{#  set ค่าแบบนี้ ค่าใน with จะไม่นำของข้างนอดมารวมด้วย และค่าที่ set ไว้ก็จะไม่สามารถเอาไปใช้นอก tag ได้ #}
+{% set bar = 'bar' %}
+{% with { foo: 42 } only %}
+  {{ foo }}   {{ bar }}
+    {# only foo is defined #}
+    {# bar is not defined #}
+
+{% endwith %}<br>
+ {{ foo }}   {{ bar }}
+
+{% set items = ['a', 'b', 'c', 'd', 'e', 'f', 'g'] %}
+
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+
+<br>
+{# filters ex  #}
+    {# ไม่ให้ค่าติดลบ ex  #}
+
+    {# number = -5 #}
+    {% set number = -5 %}
+    {{ number|abs }}
+    {# outputs 5 #}
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{# filters for แบบมีเงื่อไข  #}
+
+<table>
+{% for row in items|batch(3, 'No item') %}
+    <tr>
+        {% for column in row %}
+            <td>{{ column }}</td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{# ทำให้การแสดงผลเป็นตัวใหญ่ในคำแรก  for แบบมีเงื่อไข  #}
+{{ 'my first car'  }} 
+{{ '////'  }}
+{{ 'my first car'|capitalize }}
+<br>
+{# outputs 'My first car' #}
+
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{# date now  #}
+{{ "now"|date("m/d/Y") }}
+
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{# date modify  #}
+
+
+{{ post.published_at|date_modify("+1 day")|date("m/d/Y") }}
+<br>
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+{# like  #}
+
+{{ "I like %s and %s."|format(foo, "bar") }}
+
+{# outputs I like foo and bar
+   if the foo parameter equals to the foo string. #}
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+<br>
+{# length  #}
+    {% set users = '123567890' %}
+
+    {% if users|length > 6 %}
+        {{ 'my first car'  }} 
+    {% endif %}
+ <br>
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+{# ตำที่แสดงออกมาจะเป็นตัวเล็ก  #}   
+{{ 'WELCOME'|lower }}
+
+{# outputs 'welcome' #}
+
+{% set items = { 'apple': 'fruit', 'orange': 'fruit', 'peugeot': 'unknown' } %}
+
+{% set items = items|merge({ 'peugeot': 'car', 'renault': 'car' }) %}
+
+{# items now contains { 'apple': 'fruit', 'orange': 'fruit', 'peugeot': 'car', 'renault': 'car' } #}
+
+
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+ <br>
+
+{# /n  #}   
+
+{{ "I like Twig.\nYou will like it too."|nl2br }}
+{# outputs
+
+    I like Twig.<br />
+    You will like it too.
+
+#}
+{# ------------------------------------------------------------------------------------------------------------ #}
+
+ <br>
+
+{# ปัดเศษเอาทศนิยม ว่ากี่หลัก  #}   
+
+{{ 42.59|round(2, 'floor') }}
+{# outputs 42.5 #}
+
+{# ------------------------------------------------------------------------------------------------------------ #}
 
 {% endblock %}

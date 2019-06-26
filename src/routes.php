@@ -12,7 +12,7 @@ $app->group('/other', function() use ($app) {
     $app->get('/profile', ['\App\Controllers\HomeController', 'profile_page']);
     $app->get('/profile/{id_page}', ['\App\Controllers\HomeController', 'select_profile_id']);
     $app->get('/managent_profile', ['\App\Controllers\HomeController', 'member_profile']);
-    $app->get('/{main_page}', ['\App\Controllers\HomeController', 'other_page']);
+    $app->get('/show_profile', ['\App\Controllers\HomeController', 'show_profile_test']);
     $app->get('/edit_menu/{id_page}', ['\App\Controllers\HomeController', 'edit_menu']);
     $app->get('/edit_content/{id}', ['\App\Controllers\HomeController', 'edit_content']);
     // frontend
@@ -26,6 +26,9 @@ $app->group('/other', function() use ($app) {
     $app->post('/del_content', ['\App\Controllers\HomeController', 'del_content']);
     $app->post('/edit_profile_detail', ['\App\Controllers\HomeController', 'edit_profile_detail']);
     // $app->post('/get_data/mvc_menu', ['\App\Controllers\HomeController', 'get_data_in_db']);
+
+    $app->get('/{main_page}', ['\App\Controllers\HomeController', 'other_page']);
+
 });
 $app->post('/insert_menu', ['\App\Controllers\HomeController', 'insert_data']);
 $app->post('/get_data/{table}', ['\App\Controllers\HomeController', 'get_data_in_db']);

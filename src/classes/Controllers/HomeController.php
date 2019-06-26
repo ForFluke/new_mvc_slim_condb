@@ -74,7 +74,13 @@ class HomeController extends MainController {
             'data' => $data_session 
         ]);
     } 
-
+    public function show_profile_test(Request $request, Response $response, View $view , Main_function $Main_function){
+        $data_session = $_SESSION;
+        $data_session['data_menu'] = $Main_function->get_data_in_db('mvc_menu');
+        return $view->render($response, 'show_profile/show_profile.twig' ,[
+            'data' => $data_session 
+        ]);
+    } 
     public function frontend_page(Request $request, Response $response, View $view , Main_function $Main_function){
         // แสดงผลข้อมูลผ่านการดึงข้อมูลหน้า frontend
         $main_page = $request->getAttribute('route')->getArgument('main_page');
